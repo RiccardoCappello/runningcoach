@@ -158,7 +158,12 @@ const realFetch = window.fetch.bind(window);
 window.fetch = async (input, init) => {
   const url = typeof input === "string" ? input : input.url;
   if (bridge && url.startsWith("/") && !url.startsWith("//")) {
-    const r = await queued(() => request((init && init.method) || "GET", url));
+    const method = (init && init.method) || "GET";
+    const r = await queued(async () => {
+      const res = await request(method, url);
+      if (method !== "GET") await syncfs(false).catch((e) => console.warn("save failed", e));   // e.g. a watch sync
+      return res;
+    });
     return new Response(r.data, { status: r.status, headers: r.headers });
   }
   return realFetch(input, init);
@@ -166,6 +171,21 @@ window.fetch = async (input, init) => {
 
 // ------------------------------------------------------------------ backup
 window.coachShell = {
+  reload() { return go(route()); },            // re-render the current page (no Python restart)
+  // a file made by a page (recap image, calendar): the share sheet where there is one, else a download
+  async saveFile(name, blob, title) {
+    const file = new File([blob], name, { type: blob.type });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try { await navigator.share({ files: [file], title: title || name }); return; }
+      catch (e) { if (e.name === "AbortError") return; }
+    }
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(file);
+    a.download = name;
+    document.body.append(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+  },
   async backup() {
     await busy;
     const bytes = py.FS.readFile("/data/coach.db");
