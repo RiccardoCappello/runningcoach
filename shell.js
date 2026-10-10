@@ -171,8 +171,14 @@ window.coachShell = {
     const bytes = py.FS.readFile("/data/coach.db");
     const name = `runningcoach-${new Date().toISOString().slice(0, 10)}.db`;
     const file = new File([bytes], name, { type: "application/octet-stream" });
+    // the app remembers the date, so Today stops reminding (and Settings shows it)
+    const saved = async () => {
+      await queued(() => request("POST", "/settings/backed-up"));
+      await syncfs(false);
+      document.querySelectorAll(".banner.backup").forEach((b) => b.remove());
+    };
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      try { await navigator.share({ files: [file], title: "RunningCoach backup" }); return; }
+      try { await navigator.share({ files: [file], title: "RunningCoach backup" }); await saved(); return; }
       catch (e) { if (e.name === "AbortError") return; }
     }
     const a = document.createElement("a");
@@ -181,6 +187,7 @@ window.coachShell = {
     document.body.append(a);
     a.click();
     setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+    await saved();
   },
   restore() {
     const inp = document.createElement("input");
