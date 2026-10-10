@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>RunningCoach</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="static/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="static/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Coach">
+  <meta name="theme-color" content="#1f6f5c">
+  <link rel="stylesheet" href="static/style.css?v=2f0167dc3a">
+  <script>document.documentElement.classList.add("js")</script>
+  <style>
+    #boot { min-height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 14px; text-align: center; padding: 24px; }
+    #boot img { width: 72px; height: 72px; animation: pulse 1.6s ease-in-out infinite; }
+    #boot small { opacity: .65; max-width: 30em; }
+    @keyframes pulse { 50% { transform: scale(.92); opacity: .7; } }
+  </style>
+</head>
+<body>
+  <div id="boot">
+    <img src="static/icon.svg" alt="">
+    <p id="boot-msg">Starting your coach…</p>
+    <small>The first start downloads about 15 MB; after that it opens offline. Everything you enter stays on this phone.</small>
+  </div>
+  <div id="app" hidden></div>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.28.3/full/pyodide.js"></script>
+  <script src="shell.js?v=2f0167dc3a"></script>
+</body>
+</html>
