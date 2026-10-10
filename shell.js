@@ -119,7 +119,8 @@ function render(html, frag) {
   try {
     for (const old of app.querySelectorAll("script")) {
       const s = document.createElement("script");
-      if (old.type && old.type !== "text/javascript") { s.type = old.type; s.textContent = old.textContent; }
+      for (const at of old.attributes) s.setAttribute(at.name, at.value);     // id (data blocks), type, ...
+      if (old.type && old.type !== "text/javascript") { s.textContent = old.textContent; }
       else s.textContent = "{\n" + old.textContent + "\n}";
       old.replaceWith(s);
     }
