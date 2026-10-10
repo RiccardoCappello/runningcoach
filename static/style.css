@@ -687,3 +687,5 @@ table.splits tr.half2 td:first-child { color: var(--accent); font-weight: 700; }
 .recap .rlist { margin: 14px 0 0; padding: 0; list-style: none; }
 .recap .rlist li { padding: 6px 0; border-top: 1px solid rgba(255,255,255,.15); font-size: .92rem; }
 .recap .rlist li b { color: #ffd88a; }
+.syncline { color: var(--muted); font-size: .8rem; text-align: center; margin-top: 18px; }
+.syncline button.link { font-size: .8rem; }
