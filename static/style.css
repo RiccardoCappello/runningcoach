@@ -699,3 +699,15 @@ table.splits tr.half2 td:first-child { color: var(--accent); font-weight: 700; }
   background: var(--card-2); border: 1px dashed var(--line); border-radius: 10px; padding: 8px 12px; margin: 0 0 10px;
   font-size: .88rem; color: var(--muted); }
 .raceedit { margin: 0 0 8px; }
+
+/* race week (spec §17) */
+.raceweek h3 small { font-weight: 400; font-size: .8rem; }
+.raceweek.now { border-color: var(--accent, #1f6f5c); box-shadow: 0 0 0 1px var(--accent, #1f6f5c) inset; }
+.checklist { list-style: none; padding: 0; margin: 0; }
+.checklist li { margin: 6px 0; }
+.checklist label { display: flex; gap: 8px; align-items: flex-start; font-weight: 400; }
+.checklist input { margin-top: 3px; flex: none; }
+.planchange summary { cursor: pointer; }
+.planchange ul { margin: 4px 0 8px; padding-left: 18px; }
+.planchange li { margin: 3px 0; font-size: .92rem; }
+.planchange .sub { margin: 8px 0 0; }
