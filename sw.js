@@ -1,7 +1,7 @@
 // Offline: the app's files and Python (from the CDN) are kept in the cache. The CDN files are
 // versioned and never change -> cache first. The app's own files -> the network if it answers
 // within 3 s (a new version arrives at once), else the cached copy (offline, weak signal).
-const VERSION = "1f8bb13a82";
+const VERSION = "acffca0ad9";
 const CACHE = "coach-phone-" + VERSION;
 const CDN = "https://cdn.jsdelivr.net/pyodide/";
 
